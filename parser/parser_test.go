@@ -200,20 +200,6 @@ func TestParsingPrefixExpressions(t *testing.T) {
 	}
 }
 
-func testIntegerLiteral(t *testing.T, il ast.Expression, value int64) bool {
-	integ, ok := il.(*ast.IntegerLiteral)
-	if !ok {
-		t.Fatalf("il not *ast.IntegerLiteral. got=%T", il)
-	}
-	if integ.Value != value {
-		t.Fatalf("integ.Value not %d. got=%d", value, integ.Value)
-	}
-	if integ.TokenLiteral() != fmt.Sprintf("%d", value) {
-		t.Fatalf("integ.TokenLiteral not %d. got=%s", value, integ.TokenLiteral())
-	}
-	return true
-}
-
 func TestParsingInfixExpressions(t *testing.T) {
 	infixTests := []struct {
 		input      string
@@ -288,4 +274,32 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 			t.Errorf("expected=%q, got=%q", tt.expected, actual)
 		}
 	}
+}
+
+func testIntegerLiteral(t *testing.T, il ast.Expression, value int64) bool {
+	integ, ok := il.(*ast.IntegerLiteral)
+	if !ok {
+		t.Fatalf("il not *ast.IntegerLiteral. got=%T", il)
+	}
+	if integ.Value != value {
+		t.Fatalf("integ.Value not %d. got=%d", value, integ.Value)
+	}
+	if integ.TokenLiteral() != fmt.Sprintf("%d", value) {
+		t.Fatalf("integ.TokenLiteral not %d. got=%s", value, integ.TokenLiteral())
+	}
+	return true
+}
+
+func testIdentifier(t *testing.T, exp ast.Expression, value string) bool {
+	ident, ok := exp.(*ast.Identifier)
+	if !ok {
+		t.Fatalf("exp not *ast.Identifier. got=%T", exp)
+	}
+	if ident.Value != value {
+		t.Errorf("ident.Value not %s. got=%s", value, ident.Value)
+	}
+	if ident.TokenLiteral() != value {
+		t.Errorf("ident.TokenLiteral() not %s. got=%s", value, ident.TokenLiteral())
+	}
+	return true
 }
