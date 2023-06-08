@@ -30,7 +30,7 @@ func testEval(input string) object.Object {
 	return Eval(program)
 }
 
-func testIntegerLiteralObject(t *testing.T, obj object.Object, expected int64) bool {
+func testIntegerObject(t *testing.T, obj object.Object, expected int64) bool {
 	result, ok := obj.(*object.Integer)
 
 	if !ok {
